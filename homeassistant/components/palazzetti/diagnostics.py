@@ -6,7 +6,7 @@ from typing import Any
 
 from homeassistant.core import HomeAssistant
 
-from . import PalazzettiConfigEntry
+from .coordinator import PalazzettiConfigEntry
 
 PARALLEL_UPDATES = 1
 
