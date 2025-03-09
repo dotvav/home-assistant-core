@@ -2,10 +2,13 @@
 
 from unittest.mock import AsyncMock
 
+from pypalazzetti.exceptions import CommunicationError
+import pytest
 from syrupy import SnapshotAssertion
 
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import device_registry as dr
 
 from . import setup_integration
@@ -38,6 +41,27 @@ async def test_device(
 ) -> None:
     """Test the device information."""
     await setup_integration(hass, mock_config_entry)
+
+    device = device_registry.async_get_device(
+        connections={(dr.CONNECTION_NETWORK_MAC, "11:22:33:44:55:66")}
+    )
+    assert device is not None
+    assert device == snapshot
+
+
+async def test_setup_error(
+    hass: HomeAssistant,
+    mock_config_entry: MockConfigEntry,
+    mock_palazzetti_client: AsyncMock,
+    snapshot: SnapshotAssertion,
+    device_registry: dr.DeviceRegistry,
+) -> None:
+    """Test setup error."""
+
+    mock_palazzetti_client.connect.side_effect = CommunicationError()
+
+    with pytest.raises(HomeAssistantError):
+        await setup_integration(hass, mock_config_entry)
 
     device = device_registry.async_get_device(
         connections={(dr.CONNECTION_NETWORK_MAC, "11:22:33:44:55:66")}

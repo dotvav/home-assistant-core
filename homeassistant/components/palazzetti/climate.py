@@ -20,6 +20,8 @@ from .const import DOMAIN, FAN_AUTO, FAN_HIGH, FAN_MODES
 from .coordinator import PalazzettiDataUpdateCoordinator
 from .entity import PalazzettiEntity
 
+PARALLEL_UPDATES = 1
+
 
 async def async_setup_entry(
     hass: HomeAssistant,

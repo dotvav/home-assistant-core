@@ -1860,7 +1860,6 @@ INTEGRATIONS_WITHOUT_SCALE = [
     "panasonic_bluray",
     "panasonic_viera",
     "pandora",
-    "palazzetti",
     "panel_iframe",
     "peco",
     "pegel_online",

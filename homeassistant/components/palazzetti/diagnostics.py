@@ -8,6 +8,8 @@ from homeassistant.core import HomeAssistant
 
 from . import PalazzettiConfigEntry
 
+PARALLEL_UPDATES = 1
+
 
 async def async_get_config_entry_diagnostics(
     hass: HomeAssistant, entry: PalazzettiConfigEntry
